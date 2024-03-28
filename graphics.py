@@ -64,3 +64,40 @@ class Cell:
             self._window.draw_line(Line(Point(x1, y1), Point(x2, y1)))
         if self.has_bottom_wall:
             self._window.draw_line(Line(Point(x1, y2), Point(x2, y2)))
+    
+    def draw_move(self, to_cell, undo=False):
+        if self._window is None:
+            return
+        
+        x_center = (self._x1 + self._x2) / 2
+        y_center = (self._y1 + self._y2) / 2
+        dest_x = (to_cell._x1 + to_cell._x2) / 2
+        dest_y = (to_cell._y1 + to_cell._y2) / 2
+        fill_color = "red"
+
+        if undo:
+            fill_color = "gray"
+        
+        # if to_cell x is smaller than self x, destination lies to the left
+        # moving to the left
+        if self._x1 > to_cell._x1:
+            self._window.draw_line(Line(Point(self._x1, y_center), Point(x_center, y_center)), fill_color)
+            self._window.draw_line(Line(Point(dest_x, dest_y), Point(to_cell._x2, dest_y)), fill_color)
+        # if to_cell x is greater than self x, destination lies to the right
+        # moving to the right
+        elif self._x1 < to_cell._x1:
+            self._window.draw_line(Line(Point(x_center, y_center), Point(self._x2, y_center)), fill_color)
+            self._window.draw_line(Line(Point(to_cell._x1, dest_y), Point(dest_x, dest_y)), fill_color)
+        # if to_cell y is greater than self y, destination lies above
+        # moving up
+        elif self._y1 < to_cell._y1:           
+            self._window.draw_line(Line(Point(x_center, y_center), Point(x_center, self._y2)), fill_color)
+            self._window.draw_line(Line(Point(dest_x, dest_y), Point(dest_x, to_cell._y1)), fill_color)
+        # if to_cell y is smaller than self y, destination lies below
+        # moving down
+        elif self._y1 > to_cell._y1:
+            self._window.draw_line(Line(Point(x_center, y_center), Point(x_center, self._y1)), fill_color)
+            self._window.draw_line(Line(Point(dest_x, to_cell._y2), Point(dest_x, dest_y)), fill_color)
+        
+        
+
