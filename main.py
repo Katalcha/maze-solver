@@ -1,4 +1,4 @@
-from graphics import Window, Line, Point
+from graphics import Window, Line, Point, Cell
 
 def main():
     win = Window(800, 600)
@@ -14,6 +14,22 @@ def main():
     win.draw_line(line2, "red")
     win.draw_line(line3, "green")
     win.draw_line(diagonal, "blue")
+
+    c1 = Cell(win)
+    c1.has_left_wall = False
+    c1.draw(50, 50, 100, 100)
+    
+    c2 = Cell(win)
+    c2.has_right_wall = False
+    c2.draw(110, 50, 160, 100)
+
+    c3 = Cell(win)
+    c3.has_top_wall = False
+    c3.draw(170, 50, 220, 100)
+
+    c4 = Cell(win)
+    c4.has_bottom_wall = False
+    c4.draw(230, 50, 280, 100)
 
     # Test end
 
